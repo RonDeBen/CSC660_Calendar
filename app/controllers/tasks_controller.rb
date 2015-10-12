@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
 
   respond_to :json
+  skip_before_action :verify_authenticity_token
 
   def daily_tasks
     unless(params[:date].nil?)
@@ -16,7 +17,8 @@ class TasksController < ApplicationController
   end
 
   def edit
-    task = Task.find(params[:id])
-    task.notes = params[:notes]
+    @task = Task.find(params[:id])
+    @task.notes = params[:notes]
+    @task.save
   end
 end

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'pages#home'
   get 'daily_tasks' => 'tasks#daily_tasks'
-  resources :task
+  post 'task/:id/edit' => 'tasks#edit'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
