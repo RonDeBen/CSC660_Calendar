@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root 'pages#home'
   get 'daily_tasks' => 'tasks#daily_tasks'
+  get 'tasks/index' => 'tasks#index'
   post 'task/:id/edit' => 'tasks#edit'
   post 'tasks/create' => 'tasks#create'
 

@@ -10,6 +10,7 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all
     end
+    render 'task/index'
   end
 
   def edit
@@ -28,6 +29,10 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :start_time, :end_time, :notes, :date)
+  end
+
+  def index
+    @tasks = Task.order("start_time DESC")
   end
 
 end
