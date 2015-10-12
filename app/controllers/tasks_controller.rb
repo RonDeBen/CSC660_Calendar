@@ -3,10 +3,11 @@ class TasksController < ApplicationController
   respond_to :json
 
   def daily_tasks
-    @tasks = Task.all
+    today = DateTime.strptime(params[:date], '%m/%d/%Y %l:%M:%S %p')
+    @tasks = Task.where('start_time BETWEEN ? AND ?', today.beginning_of_day, today.end_of_day).all
   end
 
   def task_params
-    params.require(:task).permit(:name, :start_time, :end_time, :notes)
+    params.require(:task).permit(:name, :start_time, :end_time, :notes, :date)
   end
 end
