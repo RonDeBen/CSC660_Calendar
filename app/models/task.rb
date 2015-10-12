@@ -14,11 +14,16 @@ class Task < ActiveRecord::Base
     calendar_links.each do |link|
         link_page = link.click
         nok = Nokogiri::HTML(link_page.content)
-        
+
         name = nok.css('.referer a').text
         notes = "#{nok.css('.course a').text}\n#{nok.css('p').first.text}"
         date = nok.css('.current').text
         time = nok.css('.dimmed_text').text
+        if time.empty?
+            time = nok.css('.date').text
+        end
+
+        puts "#{name}\n#{date}\n#{time}"
 
         due_date = Time.strptime("#{date} #{time}",  "%A, %B %d, %Y %l:%M %p")
         newTask = Task.find_or_create_by(name: name, start_time: due_date, end_time: due_date, notes: notes)
