@@ -23,9 +23,7 @@ class Task < ActiveRecord::Base
             time = nok.css('.date').text
         end
 
-        puts "#{name}\n#{date}\n#{time}"
-
-        due_date = Time.strptime("#{date} #{time}",  "%A, %B %d, %Y %l:%M %p")
+        due_date = DateTime.strptime("#{date} #{time}",  "%A, %B %d, %Y %l:%M %p")
         newTask = Task.find_or_create_by(name: name, start_time: due_date, end_time: due_date, notes: notes)
     end
   end
