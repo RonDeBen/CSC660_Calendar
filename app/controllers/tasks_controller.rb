@@ -14,4 +14,9 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :start_time, :end_time, :notes, :date)
   end
+
+  def edit
+    task = Task.find(params[:id])
+    task.notes = params[:notes]
+  end
 end
