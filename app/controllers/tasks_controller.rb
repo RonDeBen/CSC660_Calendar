@@ -10,7 +10,7 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all
     end
-    render 'task/index'
+    render 'tasks/index'
   end
 
   def edit
