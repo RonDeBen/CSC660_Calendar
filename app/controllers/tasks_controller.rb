@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 
   def daily_tasks
     unless(params[:date].nil?)
-      today = DateTime.strptime(params[:date], '%m/%d/%Y %l:%M:%S %p')
+      today = DateTime.strptime(params[:date], '%m/%d/%y %l:%M:%S %p')
       @tasks = Task.where('start_time BETWEEN ? AND ?', today.beginning_of_day, today.end_of_day).all
     else
       @tasks = Task.all
