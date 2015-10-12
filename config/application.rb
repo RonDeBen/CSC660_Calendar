@@ -22,6 +22,8 @@ module CSC660Calendar
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
 
+    config.autoload_paths += %W(#{config.root}/lib)
+
     config.time_zone = 'Central Time (US & Canada)'
     config.active_record.default_timezone = 'Central Time (US & Canada)'
 
