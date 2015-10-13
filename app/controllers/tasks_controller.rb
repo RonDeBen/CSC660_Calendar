@@ -22,10 +22,10 @@ class TasksController < ApplicationController
 
   def create
     formatted_start = DateTime.strptime(params[:start_time], '%m/%d/%y %l:%M:%S %p') unless params[:start_time].nil?
-    formatted_start -= 7.hours
+    formatted_start += 5.hours
 
     formatted_end = DateTime.strptime(params[:end_time], '%m/%d/%y %l:%M:%S %p') unless params[:end_time].nil?
-    formatted_start -= 7.hours
+    formatted_start += 5.hours
 
     @task = Task.create(name: params[:name], start_time: formatted_start, end_time: formatted_end, notes: params[:notes])
     render 'tasks/show'
