@@ -15,7 +15,14 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
-    @task.notes = params[:notes]
+
+    formatted_start = DateTime.strptime(params[:start_time], '%m/%d/%y %l:%M:%S %p') unless params[:start_time].nil?
+    formatted_start += 5.hours
+
+    formatted_end = DateTime.strptime(params[:end_time], '%m/%d/%y %l:%M:%S %p') unless params[:end_time].nil?
+    formatted_end += 5.hours
+
+    @task = Task.new(name: params[:name], start_time: formatted_start, end_time: formatted_end, notes: params[:notes])
     @task.save
     render 'tasks/show'
   end
