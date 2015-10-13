@@ -24,7 +24,7 @@ class Task < ActiveRecord::Base
         end
 
         due_date = DateTime.strptime("#{date} #{time}",  "%A, %B %d, %Y %l:%M %p")
-        due_date = Time.now
+        due_date -= 7.hours
         newTask = Task.find_or_create_by(name: name, start_time: due_date, end_time: due_date, notes: notes)
         newTask.save
     end
