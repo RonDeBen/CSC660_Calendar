@@ -25,7 +25,6 @@ module CSC660Calendar
     config.autoload_paths += %W(#{config.root}/lib)
 
     config.time_zone = 'Central Time (US & Canada)'
-    config.active_record.default_timezone = 'Central Time (US & Canada)'
 
     config.active_record.raise_in_transactional_callbacks = true
   end
