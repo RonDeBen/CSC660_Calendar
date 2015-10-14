@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'tasks/index' => 'tasks#index'
   post 'task/:id/edit' => 'tasks#edit'
   post 'tasks/create' => 'tasks#create'
+  post 'task/:id/delete' => 'tasks#delete'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

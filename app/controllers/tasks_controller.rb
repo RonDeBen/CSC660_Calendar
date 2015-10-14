@@ -41,12 +41,20 @@ class TasksController < ApplicationController
     render 'tasks/show'
   end
 
-  def task_params
-    params.require(:task).permit(:name, :start_time, :end_time, :notes, :date)
-  end
-
   def index
     @tasks = Task.order("start_time DESC")
   end
 
+  def delete
+    task = Task.find_by(id: params[:id])
+    task.destroy
+    render nothing: true
+  end
+
+  def task_params
+    params.require(:task).permit(:name, :start_time, :end_time, :notes, :date)
+  end
+
 end
+
+
