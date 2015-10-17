@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
 
   def self.scrape_from_moodle
     User.all.each do |user|
-        scrape_user_courses(user)
+        self.scrape_user_courses(user)
     end
   end
 
@@ -38,7 +38,7 @@ class Task < ActiveRecord::Base
             newTask = Task.find_or_create_by(name: name, start_time: due_date, end_time: due_date, notes: notes, user_id: user.id) do |newTask|
                 formatted_due_date = due_date.strftime("%A, %b %e %I:%M %p")
                 message = "A new assignment was just scraped from moodle:\nclass: #{class_name}\ndue date: #{formatted_due_date}\nassignment: #{assignment_text}"
-                sms_fu.deliver(user.phone_number, user.carrier, message)
+                sms_fu.deliver(user.phone_number, user.carrier, message, limit: 1024, from: "moodlebot@lsus.edu")
             end
             newTask.save
         end
