@@ -29,11 +29,13 @@ class Task < ActiveRecord::Base
 
             due_date = DateTime.strptime("#{date} #{time}",  "%A, %B %d, %Y %l:%M %p")
             due_date += 5.hours
-            newTask = Task.find_or_create_by(name: name, start_time: due_date, end_time: due_date, notes: notes, user_id: user.id) do |newTask|
-                message = "A new assignment was just scraped from moodle:\n\nclass: #{class_name}\n\nassignment: #{assignment_text}"
-                sms_fu.deliver(user.phone_number, user.carrier, message)
+            if due_date > Time.now
+                newTask = Task.find_or_create_by(name: name, start_time: due_date, end_time: due_date, notes: notes, user_id: user.id) do |newTask|
+                    message = "A new assignment was just scraped from moodle:\nclass: #{class_name}\ndue date: #{due_date}\nassignment: #{assignment_text}"
+                    sms_fu.deliver(user.phone_number, user.carrier, message)
+                end
+                newTask.save
             end
-            newTask.save
         end
     end
   end
