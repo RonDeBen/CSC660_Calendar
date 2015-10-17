@@ -28,7 +28,7 @@ gem 'responders'
 
 gem 'mechanize'
 
-gem 'sms_fu'
+gem 'sms_fu', :git => 'https://github.com/sishen/sms-fu'
 
 gem 'pony'
 
