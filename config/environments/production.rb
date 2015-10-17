@@ -1,5 +1,18 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  sms_fu = SMSFu::Client.configure(:delivery => :pony, :pony_config => { :via => :sendmail })
+
+  PONY_CONFIG = { 
+  :via => :smtp, 
+  :via_options => {
+    :address              => 'smtp.gmail.com',
+    :port                 => '587',
+    :user_name            => 'username',
+    :password             => 'password',
+    :authentication       => :plain, 
+    :enable_starttls_auto => true,
+    :domain               => "localhost.localdomain"
+  }}
 
   # Code is not reloaded between requests.
   config.cache_classes = true
