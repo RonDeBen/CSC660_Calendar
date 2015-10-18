@@ -36,6 +36,8 @@ gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
+gem 'figaro'
+
 gem 'whenever'
 
 group :development, :test do
