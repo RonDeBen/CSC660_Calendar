@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :rememberable,
-         :trackable, :validatable, :omniauthable, :omniauth_providers => [:google_oauth2]
+         :trackable, :omniauthable, :omniauth_providers => [:google_oauth2]
   has_many :tasks
 
   after_create :scrape_my_tasks
@@ -39,5 +39,5 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
 end
