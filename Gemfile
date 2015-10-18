@@ -29,10 +29,12 @@ gem 'responders'
 gem 'mechanize'
 
 gem 'sms_fu', :git => 'https://github.com/sishen/sms-fu'
-# gem 'sms_fu'
-gem 'pony'
 
-gem 'letter_opener', group: :development
+gem 'devise'
+
+gem 'google-api-client', :require => 'google/api_client'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
 
 gem 'whenever'
 
