@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
   root 'pages#home'
-  get 'google5fd8a2bdffa0e83d' => 'pages#verify'
+  # match '/google5fd8a2bdffa0e83d.html',
+  # to: proc { |env| [200, {}, ["google-site-verification: google5fd8a2bdffa0e83d.html"]] }
+
   get 'daily_tasks' => 'tasks#daily_tasks'
   get 'tasks/index' => 'tasks#index'
   post 'task/:id/edit' => 'tasks#edit'
