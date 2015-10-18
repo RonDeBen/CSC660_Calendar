@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   root 'pages#home'
+  get 'google5fd8a2bdffa0e83d' => 'pages#verify'
   get 'daily_tasks' => 'tasks#daily_tasks'
   get 'tasks/index' => 'tasks#index'
   post 'task/:id/edit' => 'tasks#edit'
