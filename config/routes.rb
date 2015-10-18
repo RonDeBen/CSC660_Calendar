@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users,
-  :controllers => { :omniauth_callbacks => "omniauth_callbacks" } 
+  devise_for :users, controllers: { :omniauth_callbacks => "omniauth_callbacks", registrations: 'registrations', confirmations: 'confirmations' } 
 
   root 'pages#home'
   get 'daily_tasks' => 'tasks#daily_tasks'

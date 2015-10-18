@@ -40,26 +40,50 @@ class Task < ActiveRecord::Base
                 formatted_due_date = due_date.strftime("%A, %b %e %I:%M %p")
                 message = "A new assignment was just scraped from moodle:\nclass: #{class_name}\ndue date: #{formatted_due_date}\nassignment: #{assignment_text}"
                 sms_fu.deliver(user.phone_number, user.carrier, message, from: "moodlebot@lsus.edu", limit: 1024)
+                unless user.token.nil?
+                    @event = {
+                      'summary' => 'New Event Title',
+                      'description' => 'The description',
+                      'location' => 'Location',
+                      'start' => { 'dateTime' => Chronic.parse('tomorrow 4 pm') },
+                      'end' => { 'dateTime' => Chronic.parse('tomorrow 5pm') },
+                      'attendees' => [ { "email" => 'bob@example.com' },
+                      { "email" =>'sally@example.com' } ] }
 
-                @event = {
-                  'summary' => class_name,
-                  'description' => assignment_text,
-                  'location' => 'LSUS',
-                  'start' => due_date,
-                  'end' => due_date }
+                    client = Google::APIClient.new
+                    client.authorization.access_token = user.token
+                    service = client.discovered_api('calendar', 'v3')
 
-                client = Google::APIClient.new
-                client.authorization.access_token = current_user.token
-                service = client.discovered_api('calendar', 'v3')
-
-                @set_event = client.execute(:api_method => service.events.insert,
-                                        :parameters => {'calendarId' => current_user.email, 'sendNotifications' => true},
-                                        :body => JSON.dump(@event),
-                                        :headers => {'Content-Type' => 'application/json'})
+                    @set_event = client.execute(:api_method => service.events.insert,
+                                            :parameters => {'calendarId' => user.email, 'sendNotifications' => true},
+                                            :body => JSON.dump(@event),
+                                            :headers => {'Content-Type' => 'application/json'})
+                end
             end
             newTask.save
         end
     end
+  end
+
+  def self.test
+    user = User.last
+    @event = {
+      'summary' => 'New Event Title',
+      'description' => 'The description',
+      'location' => 'Location',
+      'start' => { 'dateTime' => Chronic.parse('tomorrow 4 pm') },
+      'end' => { 'dateTime' => Chronic.parse('tomorrow 5pm') },
+      'attendees' => [ { "email" => 'bob@example.com' },
+      { "email" =>'sally@example.com' } ] }
+
+    client = Google::APIClient.new
+    client.authorization.access_token = user.token
+    service = client.discovered_api('calendar', 'v3')
+
+    @set_event = client.execute(:api_method => service.events.insert,
+                            :parameters => {'calendarId' => user.email, 'sendNotifications' => true},
+                            :body => JSON.dump(@event),
+                            :headers => {'Content-Type' => 'application/json'})
   end
 
 end
