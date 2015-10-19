@@ -20,5 +20,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every 3.hours do 
-  Task.scrape_from_moodle
+  runner "Task.scrape_from_moodle"
 end

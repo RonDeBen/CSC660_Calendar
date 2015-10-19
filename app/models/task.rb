@@ -3,7 +3,7 @@ class Task < ActiveRecord::Base
 
   def self.scrape_from_moodle
     User.all.each do |user|
-        self.scrape_user_current_courses(user, false)
+        self.scrape_user_courses(user, false)
     end
   end
 
@@ -39,7 +39,7 @@ class Task < ActiveRecord::Base
             newTask = Task.find_or_create_by(name: name, start_time: due_date, end_time: due_date, notes: notes, user_id: user.id) do |newTask|
                 formatted_due_date = due_date.strftime("%A, %b %e %I:%M %p")
                 message = "A new assignment was just scraped from moodle:\nclass: #{class_name}\ndue date: #{formatted_due_date}\nassignment: #{assignment_text}"
-                sms_fu.deliver(user.phone_number, user.carrier, message, from: "moodlebot@lsus.edu", limit: 1024)
+                sms_fu.deliver(user.phone_number, user.carrier, message)
                 unless user.token.nil? 
                     due_date -= 5.hours
                     @event = {
