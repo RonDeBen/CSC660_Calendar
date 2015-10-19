@@ -9,7 +9,11 @@ class User < ActiveRecord::Base
   before_destroy :destroy_tasks
 
   def scrape_my_tasks
-    Task.scrape_user_courses(self)
+    Task.scrape_user_courses(self, false)
+  end
+
+  def scrape_all_my_tasks
+    Task.scrape_user_courses(self, true)
   end
 
   def test_message
