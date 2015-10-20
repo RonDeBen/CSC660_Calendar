@@ -13,8 +13,8 @@ class Task < ActiveRecord::Base
     mech.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     page = mech.get('https://moodle.lsus.edu/')
     login_form = page.forms.first
-    login_form.username = 'r10003101'
-    login_form.password = '1951'
+    login_form.username = user.username
+    login_form.password = user.pin
     result_page = login_form.submit
     calendar_link = result_page.links_with(text: "Go to calendar").first
     calendar_page = calendar_link.click
